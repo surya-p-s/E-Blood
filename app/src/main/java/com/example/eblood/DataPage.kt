@@ -4,8 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.Spinner
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -20,15 +22,18 @@ class DataPage : AppCompatActivity() {
         val logOut=findViewById<Button>(R.id.logOut)
 
         logOut.setOnClickListener{
-            val progressBar=findViewById<ProgressBar>(R.id.progressBar3)
-            progressBar.visibility= View.VISIBLE
             Firebase.auth.signOut()
             updateUI()
         }
+
+        val editButton=findViewById<Button>(R.id.button2)
+        editButton.setOnClickListener {
+            val intent = Intent(this,DetailsActivity::class.java)
+            startActivity(intent)
+        }
+
     }
     private fun updateUI() {
-        val progressBar=findViewById<ProgressBar>(R.id.progressBar3)
-        progressBar.visibility= View.VISIBLE
         val intent= Intent(this,LogInPage::class.java)
         startActivity(intent)
         finish()

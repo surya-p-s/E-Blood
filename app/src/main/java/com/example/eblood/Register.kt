@@ -31,7 +31,6 @@ class Register : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        val progressBar=findViewById<ProgressBar>(R.id.progressBar2)
         registerButton = findViewById(R.id.registerButton)
         email = findViewById(R.id.emailText2)
         password = findViewById(R.id.textPassword2)
@@ -41,21 +40,18 @@ class Register : AppCompatActivity() {
 
             sEmail = email.text.toString().trim()
             sPassword = password.text.toString().trim()
-            progressBar.visibility= View.VISIBLE
 
             auth.createUserWithEmailAndPassword(sEmail, sPassword)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Log.d(ContentValues.TAG, "signInWithEmail:success")
                         val user = auth.currentUser
-
                         updateUI(user)
                     } else {
                         Log.w(ContentValues.TAG, "signInWithEmail:failure", task.exception)
                         Toast.makeText(baseContext, "Already Register.", Toast.LENGTH_SHORT)
                             .show()
                         val intent = Intent(this, LogInPage::class.java)
-                        progressBar.visibility= View.VISIBLE
                         startActivity(intent)
                         finish()
                     }
@@ -66,16 +62,12 @@ class Register : AppCompatActivity() {
 
         logIN.setOnClickListener {
             val intent = Intent(this,LogInPage::class.java)
-            progressBar.visibility= View.VISIBLE
             startActivity(intent)
         }
     }
     private fun updateUI(user: FirebaseUser?) {
-
-        val progressBar=findViewById<ProgressBar>(R.id.progressBar2)
-        progressBar.visibility= View.VISIBLE
         if(user != null) {
-            val intent = Intent(this, DataPage::class.java)
+            val intent = Intent(this, DetailsActivity::class.java)
             startActivity(intent)
             finish()
         }

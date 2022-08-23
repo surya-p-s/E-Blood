@@ -35,12 +35,10 @@ class LogInPage : AppCompatActivity() {
         email = findViewById(R.id.emailText1)
         password = findViewById(R.id.textPassword1)
 
-        val progressBar=findViewById<ProgressBar>(R.id.progressBar1)
 
 
         logIn.setOnClickListener {
 
-            progressBar.visibility= View.VISIBLE
             sEmail = email.text.toString().trim()
             sPassword = password.text.toString().trim()
 
@@ -52,7 +50,6 @@ class LogInPage : AppCompatActivity() {
                         Toast.makeText(baseContext, "LogIn Successful", Toast.LENGTH_SHORT)
                             .show()
                         val user = auth.currentUser
-                        progressBar.visibility= View.VISIBLE
                         updateUI(user)
                     } else {
                         Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -62,7 +59,6 @@ class LogInPage : AppCompatActivity() {
                 }
         }
         registerButton.setOnClickListener {
-            progressBar.visibility= View.VISIBLE
             val intent= Intent(this,Register::class.java)
             startActivity(intent)
         }
@@ -70,26 +66,18 @@ class LogInPage : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
-        progressBar.visibility= View.GONE
+
         val currentUser=auth.currentUser
 
         if (currentUser!=null){
 
-            progressBar.visibility= View.VISIBLE
             val intent= Intent(this,DataPage::class.java)
-            Toast.makeText(baseContext, "LogIn Successful", Toast.LENGTH_LONG).show()
             startActivity(intent)
             finish()
-        }
-        else{
-            Toast.makeText(baseContext, "LogIn to Continue", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun updateUI(user: FirebaseUser?) {
-        val progressBar=findViewById<ProgressBar>(R.id.progressBar1)
-        progressBar.visibility= View.VISIBLE
         if(user != null) {
             val intent = Intent(this, DataPage::class.java)
             startActivity(intent)
